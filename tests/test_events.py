@@ -2,7 +2,7 @@ import time
 import pytest
 from slackeventsapi import SlackEventAdapter
 
-ADAPTER = SlackEventAdapter('SIGNING_SECRET')
+ADAPTER = SlackEventAdapter('DFPK6Jejy3fOatPI2Z35qQzp')
 
 def test_event_emission(client):
     # Events should trigger an event

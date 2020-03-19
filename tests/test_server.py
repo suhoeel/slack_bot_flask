@@ -11,14 +11,14 @@ from slackeventsapi.version import __version__
 
 def test_existing_flask():
     valid_flask = Flask(__name__)
-    valid_adapter = SlackEventAdapter("SIGNING_SECRET", "/slack/events", valid_flask)
+    valid_adapter = SlackEventAdapter("DFPK6Jejy3fOatPI2Z35qQzp", "/slack/events", valid_flask)
     assert isinstance(valid_adapter, SlackEventAdapter)
 
 
 def test_server_not_flask():
     with pytest.raises(TypeError) as e:
         invalid_flask = "I am not a Flask"
-        SlackEventAdapter("SIGNING_SECRET", "/slack/events", invalid_flask)
+        SlackEventAdapter("DFPK6Jejy3fOatPI2Z35qQzp", "/slack/events", invalid_flask)
     assert e.value.args[0] == 'Server must be an instance of Flask'
 
 
@@ -29,7 +29,7 @@ def test_event_endpoint_get(client):
 
 
 def test_url_challenge(client):
-    slack_adapter = SlackEventAdapter("SIGNING_SECRET")
+    slack_adapter = SlackEventAdapter("DFPK6Jejy3fOatPI2Z35qQzp")
     data = pytest.url_challenge_fixture
     timestamp = int(time.time())
     signature = pytest.create_signature(slack_adapter.signing_secret, timestamp, data)
@@ -49,7 +49,7 @@ def test_url_challenge(client):
 
 def test_invalid_request_signature(client):
     # Verify [package metadata header is set
-    slack_adapter = SlackEventAdapter("SIGNING_SECRET")
+    slack_adapter = SlackEventAdapter("DFPK6Jejy3fOatPI2Z35qQzp")
 
     data = pytest.reaction_event_fixture
     timestamp = int(time.time())
@@ -71,7 +71,7 @@ def test_invalid_request_signature(client):
 
 def test_invalid_request_timestamp(client):
     # Verify [package metadata header is set
-    slack_adapter = SlackEventAdapter("SIGNING_SECRET")
+    slack_adapter = SlackEventAdapter("DFPK6Jejy3fOatPI2Z35qQzp")
 
     data = pytest.reaction_event_fixture
     timestamp = int(time.time()+1000)
@@ -93,7 +93,7 @@ def test_invalid_request_timestamp(client):
 
 def test_compare_digest_fallback(client, monkeypatch):
     # Verify [package metadata header is set
-    slack_adapter = SlackEventAdapter("SIGNING_SECRET")
+    slack_adapter = SlackEventAdapter("DFPK6Jejy3fOatPI2Z35qQzp")
 
     if hasattr(hmac, "compare_digest"):
         monkeypatch.delattr(hmac, 'compare_digest')
@@ -117,7 +117,7 @@ def test_compare_digest_fallback(client, monkeypatch):
 
 def test_version_header(client):
     # Verify [package metadata header is set
-    slack_adapter = SlackEventAdapter("SIGNING_SECRET")
+    slack_adapter = SlackEventAdapter("DFPK6Jejy3fOatPI2Z35qQzp")
     package_info = slack_adapter.server.package_info
 
     data = pytest.reaction_event_fixture
@@ -140,7 +140,7 @@ def test_version_header(client):
 
 def test_server_start(mocker):
     # Verify server started with correct params
-    slack_events_adapter = SlackEventAdapter("SIGNING_SECRET")
+    slack_events_adapter = SlackEventAdapter("DFPK6Jejy3fOatPI2Z35qQzp")
     mocker.spy(slack_events_adapter, 'server')
     slack_events_adapter.start(port=3000)
     slack_events_adapter.server.run.assert_called_once_with(debug=False, host='127.0.0.1', port=3000)
